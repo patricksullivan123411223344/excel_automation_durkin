@@ -19,6 +19,18 @@ def dynamic_write(file_path: str, data: str) -> None:
     sheet.cell(row=row, column=1).value = data # Adjust column index as needed
 
 def dynamic_read(file_path: str, sheet_name: str) -> list:
+    # Open workbook and select the sheet returning an error if wb does not exist
     try: 
         wb = load_workbook(file_path)
         sheet = wb[sheet_name]
+    except FileNotFoundError:
+        print(f"File {file_path} not found. Please check the file path.")
+        return []
+    
+    # Create list for data to append and return through itereation
+    data = []
+    for row in sheet.iter_rows(values_only=True):
+        data.append(row)
+        return data
+
+
