@@ -1,3 +1,9 @@
+"""
+Dynamic Excel Controller Module:
+This module provides functions to perform dynamic CRUD (Create, Read, Update, Delete) 
+operations on Excel files using the openpyxl library. The functions allow you to write data to the 
+first empty row, read data from a specified sheet, update specific cells, and delete cell values in an Excel workbook.
+"""
 import openpyxl
 from openpyxl import load_workbook
 
@@ -32,5 +38,39 @@ def dynamic_read(file_path: str, sheet_name: str) -> list:
     for row in sheet.iter_rows(values_only=True):
         data.append(row)
         return data
+    
+def dynamic_update(file_path: str, sheet_name: str, row: int, column: int, new_value) -> None:
+    # Open the workbook and select the sheet
+    try:
+        wb = load_workbook(file_path)
+        sheet = wb[sheet_name]
+    except FileNotFoundError:
+        print(f"File {file_path} not found. Please check the file path.")
+        return 
+    
+    # Update the specific cell with the new value
+    sheet.cell(row=row, column=column).value = new_value
+
+    # Save the workbook after updating
+    wb.save(file_path)
+
+def dynamic_delete(file_path: str, sheet_name: str, row: int, column: int) -> None:
+    try: 
+        wb = load_workbook(file_path)
+        sheet = wb[sheet_name]
+    except FileNotFoundError:
+        print(f"File {file_path} not found. Please check the file path.")
+        return
+    
+    # Clear the value of the specified cell
+    sheet.cell(row=row, column=column).value = None
+
+    # Save the workbook after deleting
+    wb.save(file_path)
+
+
+
+
+
 
 
