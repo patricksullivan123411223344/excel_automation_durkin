@@ -4,7 +4,6 @@ This module provides functions to perform dynamic CRUD (Create, Read, Update, De
 operations on Excel files using the openpyxl library. The functions allow you to write data to the 
 first empty row, read data from a specified sheet, update specific cells, and delete cell values in an Excel workbook.
 """
-import openpyxl
 from openpyxl import load_workbook
 
 def dynamic_write(file_path: str, data: str) -> None:
